@@ -24,5 +24,12 @@
         <h2>Shortened URLs</h2>
         <ul id="shortened-urls"></ul>
     </div>
+    <script>
+        document.getElementById('shorten-form').addEventListener('submit', (event) => {
+            event.preventDefault(); // Preventing the page auto refresh;
+            const dataForm = new FormData(event.target); // Getting the targeted form data fields;
+            console.log(dataForm); // Printing the data on console;
+        });
+    </script>
 </body>
 </html>
