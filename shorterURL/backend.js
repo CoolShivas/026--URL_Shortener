@@ -16,6 +16,9 @@ import path from "path";
  
  
  
+const PORT = 5000;
+
+
  const serverFile = createServer( async (request, response) => {
      if(request.method === "GET")// Request hitted to GET method of server to take data from it;
          {
@@ -39,4 +42,11 @@ import path from "path";
                  }
              }
          }
+ });
+
+
+
+
+ serverFile.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
  });
