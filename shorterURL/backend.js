@@ -10,19 +10,19 @@
 // // // // Completed running 'backend.js'
 
 
-import { readFile } from "fs";
+import { readFile } from "fs/promises";
 import {createServer} from "http";
 import path from "path";
  
  
  
- const serverFile = createServer((request, response) => {
+ const serverFile = createServer( async (request, response) => {
      if(request.method === "GET")// Request hitted to GET method of server to take data from it;
          {
              if(request.url === "/") // Request hitted to url / page or home page;
              {
                  try {
-                     const handlingData = readFile(path.join("public", "index.html"));
+                     const handlingData = await readFile(path.join("public", "index.html"));
                      // // Use of readFile to read the files content;
                      // // As well as path used to locate the folder and file;
                      response.writeHead(200, {"Content-Type" : "text/html"});
