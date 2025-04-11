@@ -10,7 +10,9 @@
 // // // // Completed running 'backend.js'
 
 
+import { readFile } from "fs";
 import {createServer} from "http";
+import path from "path";
  
  
  
@@ -20,7 +22,13 @@ import {createServer} from "http";
              if(request.url === "/") // Request hitted to url / page or home page;
              {
                  try {
-                     
+                     const handlingData = readFile(path.join("public", "index.html"));
+                     // // Use of readFile to read the files content;
+                     // // As well as path used to locate the folder and file;
+                     response.writeHead(200, {"Content-Type" : "text/html"});
+                     // // If request is successfull then access the file content;
+                     response.end(handlingData);
+                     // // And, then data is visible on the browser screen of this index.html file;
                  } catch (error) {
                      // // If there were any error;
                      response.writeHead(404, {"Content-Type" : "text/html"});
