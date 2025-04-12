@@ -19,46 +19,29 @@ import path from "path";
 const PORT = 5000;
 
 
+const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => {
+    try {
+        const dataHandle = await readFile(filePath);
+        response.writeHead(200, {"Content-Type" : contentType});
+        response.end(dataHandle);
+    } catch (error) {
+        response.writeHead(404, {"Content-Type" : contentType});
+        response.end("404 Page not found");
+    }
+};
+
+
+
  const serverFile = createServer( async (request, response) => {
      if(request.method === "GET")// Request hitted to GET method of server to take data from it;
          {
              if(request.url === "/") // Request hitted to url / page or home page;
              {
-                 try {
-                     const handlingData = await readFile(path.join("public", "index.html"));
-                     // // Use of readFile to read the files content;
-                     // // As well as path used to locate the folder and file;
-                     response.writeHead(200, {"Content-Type" : "text/html"});
-                     // // If request is successfull then access the file content;
-                     response.end(handlingData);
-                     // // And, then data is visible on the browser screen of this index.html file;
-                 } catch (error) {
-                     // // If there were any error;
-                     response.writeHead(404, {"Content-Type" : "text/html"});
-                     // // Response created the error page i.e, 404 with content type 
-                     // // i.e., html file;
-                     response.end("404 Page not found");
-                     // // Response shows the text on the browser page i.e, 404 Page not found;
-                 }
+                 return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "index.html"), "text/html");
              }
              else if(request.url === "/style.css")
              {
-                try {
-                    const handlingData = await readFile(path.join("public", "style.css"));
-                    // // Use of readFile to read the files content;
-                    // // As well as path used to locate the folder and file;
-                    response.writeHead(200, {"Content-Type" : "text/css"});
-                    // // If request is successfull then access the file content;
-                    response.end(handlingData);
-                    // // And, then data is visible on the browser screen of this index.html file;
-                } catch (error) {
-                    // // If there were any error;
-                    response.writeHead(404, {"Content-Type" : "text/css"});
-                    // // Response created the error page i.e, 404 with content type 
-                    // // i.e., css file;
-                    response.end("404 Page not found");
-                    // // Response shows the text on the browser page style i.e, 404 Page not found;
-                }
+                return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "style.css"), "text/css");
              }
          }
  });
