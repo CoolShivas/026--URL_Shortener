@@ -10,7 +10,7 @@
 // // // // Completed running 'backend.js'
 
 
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import {createServer} from "http";
 import path from "path";
 import crypto from "crypto";
@@ -32,6 +32,23 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
 };
 
 
+const loadLinks = async () => {
+    try {
+        const data = await readFile(url, 'utf-8');
+        // // Reading the url of the load link whether it is duplicate or not;
+        return JSON.parse(data);
+        // // Converting it to json format;
+    } catch (error) {
+        if(error.code === "ENOENT")
+        {
+            await writeFile(url, JSON.stringify({}));
+            // // If there is no duplicate or it is new one then storing it into new object with the stringify it;
+            return {};
+        }
+        throw error;// Over-all throwing the error. If all the condition not match;
+    }
+};
+
 
  const serverFile = createServer( async (request, response) => {
      if(request.method === "GET")// Request hitted to GET method of server to take data from it;
@@ -49,6 +66,7 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
          {
             if(request.url === "/shorten")// Request hitted to url / page or home page;
             {
+                const links = await loadLinks();// Loading or uploading the new link and checking for the duplicacy;
                 const body = "";
                 response.addListener("data", (chunk) => {
                     // // Tiggering the "data" event of .on or .addListener response;
