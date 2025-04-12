@@ -44,6 +44,32 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
                 return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "style.css"), "text/css");
              }
          }
+         if(request.method === "POST")// Request hitted to POST method of server to update or post data into it;
+         {
+            if(request.url === "/shorten")// Request hitted to url / page or home page;
+            {
+                const body = "";
+                response.addListener("data", (chunk) => {
+                    // // Tiggering the "data" event of .on or .addListener response;
+                    // // And taking it into small chunks instead of whole at once;
+                    body = body + chunk;
+                });
+                response.addListener("end", () => {
+                    // // Tiggering the "end" event of .on or .addListener when server response ends;
+                    // // And, converting the data into js object;
+                    console.log(body);
+                    const {url, shortCode} = JSON.parse(body); 
+                    // // Converting the data into javascript object and saving it on body variable;
+                    if(!url) // If there is no url;
+                    {
+                        response.writeHead(400, {"Content-Type" : "text/plain"});
+                        // // If url is not there, showing the text plain area;
+                        return response.end("URL is required");
+                    }
+                });
+            }
+         }
+
  });
 
 
