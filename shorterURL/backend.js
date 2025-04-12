@@ -19,6 +19,9 @@ import crypto from "crypto";
  
 const PORT = 5000;
 
+const DATA_FILE = path.join("data", "links.json");
+// // Created the data file and showing its location where to store the url and links;
+
 
 const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => {
     try {
@@ -34,14 +37,14 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
 
 const loadLinks = async () => {
     try {
-        const data = await readFile(url, 'utf-8');
+        const data = await readFile(DATA_FILE, 'utf-8');
         // // Reading the url of the load link whether it is duplicate or not;
         return JSON.parse(data);
         // // Converting it to json format;
     } catch (error) {
         if(error.code === "ENOENT")
         {
-            await writeFile(url, JSON.stringify({}));
+            await writeFile(DATA_FILE, JSON.stringify({}));
             // // If there is no duplicate or it is new one then storing it into new object with the stringify it;
             return {};
         }
