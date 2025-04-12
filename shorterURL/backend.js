@@ -13,6 +13,7 @@
 import { readFile } from "fs/promises";
 import {createServer} from "http";
 import path from "path";
+import crypto from "crypto";
  
  
  
@@ -66,6 +67,10 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
                         // // If url is not there, showing the text plain area;
                         return response.end("URL is required");
                     }
+
+                    // // Checking the duplicate in backend;
+                    const finalShortCode = shortCode || crypto.randomBytes(4).toString("hex");
+                    // // Getting shortCode if that url is not short then with the help of crypto make it shorter;
                 });
             }
          }
