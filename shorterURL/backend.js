@@ -29,7 +29,8 @@ const getRidOfDoNotRepeatCodeAgain = async (response, filePath, contentType) => 
         response.writeHead(200, {"Content-Type" : contentType});
         response.end(dataHandle);
     } catch (error) {
-        response.writeHead(404, {"Content-Type" : contentType});
+        response.writeHead(404, {"Content-Type" : "text/plain"});
+        // Showing the content plain text with error page message;
         response.end("404 Page not found");
     }
 };
@@ -73,14 +74,14 @@ const saveLinks = async (links) => {
              {
                  return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "index.html"), "text/html");
              }
-             else if(request.url === "/style.css")
+             else if(request.url === "/style.css")// Request hitted to url /style.css for home page only;
              {
                 return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "style.css"), "text/css");
              }
          }
          if(request.method === "POST")// Request hitted to POST method of server to update or post data into it;
          {
-            if(request.url === "/shorten")// Request hitted to url / page or home page;
+            if(request.url === "/shorten")// Request hitted to url /shorten page;
             {
                 const links = await loadLinks();// Loading or uploading the new link and checking for the duplicacy;
                 const body = "";

@@ -29,6 +29,22 @@
             event.preventDefault(); // Preventing the page auto refresh;
             const dataForm = new FormData(event.target); // Getting the targeted form data fields;
             console.log(dataForm); // Printing the data on console;
+            const url = dataForm.get('url'); // Getting the upper id="url" form field;
+            const shortCode = dataForm.get('shortCode');// Getting the upper id="shortCode" form field;
+            console.log(url, shortCode);
+            // // Getting the Output on the frontend i.e., browser page console by clicking the Shorten button;
+
+
+            // // Calling the Backend api especially the "/shorten" for the frontend purpose whenever the form submitted;
+            try {
+                const responsy = fetch("/shorten", {
+                    method : "POST", 
+                    headers : {"Content-Type" : "application/json"},
+                    body : JSON.stringify({uRl, shortCODE}),
+                });
+            } catch (error) {
+                console.log(error); 
+            }    
         });
     </script>
 </body>
