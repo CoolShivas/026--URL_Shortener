@@ -53,6 +53,14 @@ const loadLinks = async () => {
 };
 
 
+const saveLinks = async (links) => {
+    await writeFile(DATA_FILE, JSON.stringify(links));
+    // // Saving the links i.e., getting from the frontend or by user enter on the fields i.e, {urlURL, shortCode};
+    // // Converting agian the data into strings;
+};
+
+
+
  const serverFile = createServer( async (request, response) => {
     console.log(request.url);
     // // // Getting the data on Terminal;
@@ -108,6 +116,13 @@ const loadLinks = async () => {
                     
                     links[finalShortCode] = urlURL; 
                     // //Saving the new url and shortCode to new variable i.e, urlURL;
+
+                    await saveLinks(links);// Saving the links of the frontend to backend data base;
+
+                    response.writeHead(200, {"Content-Type" : "application/json"});
+                    response.end(JSON.stringify({success : true, shortCode : finalShortCode}));
+                    // // Showing the content of the backend on frontend look on the browser;
+
                 });
             }
          }
