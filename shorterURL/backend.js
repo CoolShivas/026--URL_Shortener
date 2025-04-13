@@ -54,6 +54,11 @@ const loadLinks = async () => {
 
 
  const serverFile = createServer( async (request, response) => {
+    console.log(request.url);
+    // // // Getting the data on Terminal;
+    // // // /
+    // // // /style.css
+    // // // /favicon.ico
      if(request.method === "GET")// Request hitted to GET method of server to take data from it;
          {
              if(request.url === "/") // Request hitted to url / page or home page;
@@ -76,11 +81,11 @@ const loadLinks = async () => {
                     // // And taking it into small chunks instead of whole at once;
                     body = body + chunk;
                 });
-                response.addListener("end", () => {
+                response.addListener("end", async () => {
                     // // Tiggering the "end" event of .on or .addListener when server response ends;
                     // // And, converting the data into js object;
                     console.log(body);
-                    const {url, shortCode} = JSON.parse(body); 
+                    const {urlURL, shortCode} = JSON.parse(body); 
                     // // Converting the data into javascript object and saving it on body variable;
                     if(!url) // If there is no url;
                     {
@@ -92,6 +97,17 @@ const loadLinks = async () => {
                     // // Checking the duplicate in backend;
                     const finalShortCode = shortCode || crypto.randomBytes(4).toString("hex");
                     // // Getting shortCode if that url is not short then with the help of crypto make it shorter;
+
+                    if(links[finalShortCode])
+                    {
+                        response.writeHead(400, {"Content-Type" : "text/plain"});
+                        // // Showing the plain or blank fields for entering the data;
+                        return response.end("Short Code already exist. Please choose another!")
+                        // // Showing the error if duplicate exists;
+                    }
+                    
+                    links[finalShortCode] = urlURL; 
+                    // //Saving the new url and shortCode to new variable i.e, urlURL;
                 });
             }
          }
