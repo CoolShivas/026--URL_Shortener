@@ -40,7 +40,8 @@
                 const responsy = await fetch("/shorten", {
                     method : "POST", 
                     headers : {"Content-Type" : "application/json"},
-                    body : JSON.stringify({uRl, shortCODE}),
+                    body : JSON.stringify({url, shortCode}),
+                    // // This uRl = url and shortCODE = shortCode should match with the backend file too. For the clear memory storage;
                 });
                 if(responsy.ok)
                 {

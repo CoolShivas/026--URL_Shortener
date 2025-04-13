@@ -94,8 +94,9 @@ const saveLinks = async (links) => {
                     // // Tiggering the "end" event of .on or .addListener when server response ends;
                     // // And, converting the data into js object;
                     console.log(body);
-                    const {urlURL, shortCode} = JSON.parse(body); 
+                    const {url, shortCode} = JSON.parse(body); 
                     // // Converting the data into javascript object and saving it on body variable;
+                    // // This urlURL = url and shortCode should match with the frontend file too. For the clear memory storage;
                     if(!url) // If there is no url;
                     {
                         response.writeHead(400, {"Content-Type" : "text/plain"});
@@ -115,8 +116,9 @@ const saveLinks = async (links) => {
                         // // Showing the error if duplicate exists;
                     }
                     
-                    links[finalShortCode] = urlURL; 
+                    links[finalShortCode] = url; 
                     // //Saving the new url and shortCode to new variable i.e, urlURL;
+                    // // This urlURL = url and shortCode should match with the frontend file too. For the clear memory storage; 
 
                     await saveLinks(links);// Saving the links of the frontend to backend data base;
 
