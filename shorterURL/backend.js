@@ -84,13 +84,13 @@ const saveLinks = async (links) => {
             if(request.url === "/shorten")// Request hitted to url /shorten page;
             {
                 const links = await loadLinks();// Loading or uploading the new link and checking for the duplicacy;
-                const body = "";
-                response.addListener("data", (chunk) => {
+                let body = "";
+                request.addListener("data", (chunk) => {
                     // // Tiggering the "data" event of .on or .addListener response;
                     // // And taking it into small chunks instead of whole at once;
                     body = body + chunk;
                 });
-                response.addListener("end", async () => {
+                request.addListener("end", async () => {
                     // // Tiggering the "end" event of .on or .addListener when server response ends;
                     // // And, converting the data into js object;
                     console.log(body);
@@ -117,14 +117,15 @@ const saveLinks = async (links) => {
                     }
                     
                     links[finalShortCode] = url; 
-                    // //Saving the new url and shortCode to new variable i.e, urlURL;
-                    // // This urlURL = url and shortCode should match with the frontend file too. For the clear memory storage; 
+                    // //Saving the new url and shortCode to links in object of array type i.e, by links[finalShortCode];
+                    // // This urlURL = url and shortCode should match with the Frontend file too. For the clear memory storage; 
 
-                    await saveLinks(links);// Saving the links of the frontend to backend data base;
+                    await saveLinks(links);
+                    // Saving the links of the Frontend to Backend data base in the data folder;
 
                     response.writeHead(200, {"Content-Type" : "application/json"});
                     response.end(JSON.stringify({success : true, shortCode : finalShortCode}));
-                    // // Showing the content of the backend on frontend look on the browser;
+                    // // Showing the content of the Backend on Frontend look on the browser;
 
                 });
             }
