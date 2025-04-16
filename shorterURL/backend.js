@@ -78,6 +78,16 @@ const saveLinks = async (links) => {
              {
                 return getRidOfDoNotRepeatCodeAgain(response, path.join("public", "style.css"), "text/css");
              }
+             else if(request.url === "/links")
+            {
+                // // Creating an API for frontend purpose i.e, the store links in data folder i.e, enter by user and stored by backend in data folder links.json() file;
+                const links = await loadLinks(); 
+                // // Getting the store links data here in this url again i.e,("/links");
+                response.writeHead(200, {"Content-Type" : "application/json"});
+                // // If the Response is 200 then content will display;
+                return response.end(JSON.stringify(links));
+                // // Response end and clearly shown the links into converted format because it is in json format converted into string format;
+            }
          }
          if(request.method === "POST")// Request hitted to POST method of server to update or post data into it;
          {
