@@ -38,8 +38,9 @@
             list.innerHTML = "";
 
             for(const [shortCode, url] of Object.entries(linkey)){
-                const li = document.createElement("li");
-                li.innerHTML = `<a href="/${shortCode}" target="_blank">${window.location.origin}/${shortCode}</a> - ${url}`
+                const li = document.createElement("li"); 
+                const truncatedURL = url.length >= 30 ? `${url.slice(0, 30)}...` : url;
+                li.innerHTML = `<a href="/${shortCode}" target="_blank">${window.location.origin}/${shortCode}</a> - ${truncatedURL}`
 
                 list.appendChild(li);// Pushing the li inside the list i.e, "shortened-urls";
             } 
