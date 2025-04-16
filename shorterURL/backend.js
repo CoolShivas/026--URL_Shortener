@@ -88,6 +88,36 @@ const saveLinks = async (links) => {
                 return response.end(JSON.stringify(links));
                 // // Response end and clearly shown the links into converted format because it is in json format converted into string format;
             }
+            else
+            {
+                const links = await loadLinks(); 
+                // // Getting the links here for redirecting the links;
+                const shortCode = request.url.slice(1);
+                // // Use of slice(1); Here, remove of starting coming slice such as "/chai";
+                console.log("Link redirected => ", request.url);
+                // // Here, we are getting the Output on Terminal as :-
+                // // /
+                // // /style.css
+                // // /shorten
+                // // {"url":"https://www.youtube.com/watch?v=iSNvKaVtwTU","shortCode":"chai"}
+                // // /links
+                // // /links
+                // // /chai
+                // // Link redirected =>  /chai
+                if(links[shortCode]) // Getting all links and from that particular shortCode link;
+                {
+                    response.writeHead(302, {location : links[shortCode]});
+                    // // 302 means that page found;
+                    return response.end(); 
+                    // // Ending the response by giving the result;
+                }
+                else 
+                {
+                    response.writeHead(404, {"Content-Type" : "text/plain"});
+                    return response.end("Shortend URL is not found");
+                    // // If page not found after clicking the shortCode link;
+                }
+            }
          }
          if(request.method === "POST")// Request hitted to POST method of server to update or post data into it;
          {
