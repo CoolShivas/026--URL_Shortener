@@ -25,6 +25,17 @@
         <ul id="shortened-urls"></ul>
     </div>
     <script>
+
+        const fetchShowLinksOfBackendToFrontend = async () => {
+            // // Calling the Backend API especially the "/links" for the frontend purpose whenever the form submitted;
+            const resp = await fetch("/links");
+            const linkey = await resp.json();
+            // // Converting it into string format;
+            console.log("linkens => ", linkey);
+            // // Getting the data on Browser console;
+        };
+
+
         document.getElementById('shorten-form').addEventListener('submit', async (event) => {
             event.preventDefault(); // Preventing the page auto refresh;
             const dataForm = new FormData(event.target); // Getting the targeted form data fields;
@@ -45,6 +56,8 @@
                 });
                 if(responsy.ok)
                 {
+                    fetchShowLinksOfBackendToFrontend(); 
+                    // // If Response is ok then show all data of Backend data base here;
                     alert("Link shorten successfully!");
                     // // Shown this if Enter URL and Enter ShortCode submitted successfully;
                     event.target.reset();
@@ -60,6 +73,8 @@
                 console.log(error); 
                 // // Shown error;
             }    
+            fetchShowLinksOfBackendToFrontend();
+            // // Showing the url and shortCode after running all program;
         });
     </script>
 </body>
