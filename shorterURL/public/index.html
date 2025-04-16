@@ -33,6 +33,17 @@
             // // Converting it into string format;
             console.log("linkens => ", linkey);
             // // Getting the data on Browser console;
+
+            const list = document.getElementById("shortened-urls");
+            list.innerHTML = "";
+
+            for(const [shortCode, url] of Object.entries(linkey)){
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="/${shortCode}" target="_blank">${window.location.origin}/${shortCode}</a> - ${url}`
+
+                list.appendChild(li);// Pushing the li inside the list i.e, "shortened-urls";
+            } 
+            // // The Object.entries() static method returns an array of a given object's own enumerable string-keyed property key-value pairs;
         };
 
 
